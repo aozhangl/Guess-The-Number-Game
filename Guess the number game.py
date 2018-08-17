@@ -1,0 +1,72 @@
+#By: Liliana Ao
+#An Introduction to Interactive Programming in Python (Part 1) - Week 2
+#Mini-project #2: Guess the number game
+
+import simplegui
+import random
+import math
+
+secret_number = 0
+range = 100
+remaining_guesses = 7
+
+def new_game():
+    global secret_number, range, remaining_guesses
+    secret_number = random.randrange(0, range)
+    if range == 100:
+        remaining_guesses = 7
+    else:
+        remaining_guesses = 10
+    print "New game. Range is from 0 to", range
+    print "Numer of remaining guesses is", remaining_guesses
+    print
+
+def range100():
+    global range, remaining_guesses
+    range = 100
+    remaining_guesses = 7
+    new_game()
+
+
+def range1000():    
+    global range, remaining_guesses
+    range = 1000
+    remaining_guesses = 10
+    new_game()
+    
+def input_guess(guess):
+    guess = int(guess)
+    print "Guess was", guess
+    global secret_number, remaining_guesses
+    if remaining_guesses > 0:
+        if guess < secret_number:
+            remaining_guesses -= 1
+            print "Numer of remaining guesses is", remaining_guesses
+            print "Higher!"   
+            print
+        elif guess > secret_number:
+            remaining_guesses -= 1
+            print "Numer of remaining guesses is", remaining_guesses
+            print "Lower!"
+            print
+        else:
+            remaining_guesses -= 1
+            print "Numer of remaining guesses is", remaining_guesses
+            print "Correct!"   
+            print
+            new_game()
+    else:
+        print "Numer of remaining guesses is", remaining_guesses
+        print "You ran out of guesses. The number was", secret_number 
+        print
+        new_game()
+
+frame = simplegui.create_frame("Guess The Number Game", 200, 200)
+range100 = frame.add_button("Range is [0, 100)", range100)
+range1000 = frame.add_button("Range is [0, 1000)", range1000)
+frame.add_input("Enter your guess:", input_guess, 50)
+
+new_game()
+frame.start()
+
+                             
